@@ -1,6 +1,6 @@
 a{
     text-decoration: none;
-    color: #000;
+    color: rgb(255, 255, 255);
 }
 ul{
     list-style-type: none;
@@ -10,8 +10,21 @@ ul{
     color:orange;
 }
 .product_img{
-    border: 1px solid black;
+    border: 3px double gold;
 }
 body{
-    color :gold;
+    background-color: rgb(32, 31, 31);
+    color:darkgray;
+    font-family: fantasy;
+}
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+}
+textarea{
+    background-color: rgb(32, 31, 31);
+    color: darkgray;
+}
+input{
+    background-color: rgb(32, 31, 31);
+    color: darkgray;
 }
