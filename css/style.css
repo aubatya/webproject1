@@ -1,30 +1,47 @@
-a{
+#first{
+    color: darkgray;
+}
+#second{
+    list-style-type: none;
+    padding-left: 0px;
+}
+.hlink{
+    list-style-type: none;
+    padding-left: 0;
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
-ul{
-    list-style-type: none;
-    padding-left: 0;
+.header{
+    background-color: rgb(62, 62, 62);
 }
 .footer{
     color:orange;
+    background-color: rgb(62, 62, 62);
 }
 .product_img{
-    border: 3px double gold;
+    border: 3px double rgba(255, 217, 0, 0.726);
 }
 body{
-    background-color: rgb(32, 31, 31);
+    background-color: rgb(31, 31, 31);
     color:darkgray;
     font-family: fantasy;
+    margin: 5px;
 }
 h1{
     font-family: Arial, Helvetica, sans-serif;
 }
 textarea{
-    background-color: rgb(32, 31, 31);
+    background-color: rgb(31, 31, 31);
     color: darkgray;
 }
 input{
-    background-color: rgb(32, 31, 31);
+    background-color: rgb(31, 31, 31);
     color: darkgray;
+}
+a{
+    color:rgba(255, 217, 0, 0.726);
+    text-decoration: none;
+}
+a:hover{
+    color: red;
 }
