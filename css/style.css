@@ -72,6 +72,12 @@ body{
 h1{
     font-family: Comic Sans MS, Comic Sans, cursive;
 }
+h2{
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
+h3{
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
 textarea{
     background-color: rgb(31, 31, 31);
     color: darkgray;
