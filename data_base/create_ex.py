@@ -1,10 +1,17 @@
 import string
 import random
+import random_date
+import datetime
+
 lu = []
 lp = []
 lo = []
 alp = list(string.ascii_lowercase)
-for k in range(1000):
+foundation_date = "01.07.1988"
+now = datetime.datetime.now().strftime('%d.%m.%Y')
+quantity_object = 1000
+
+for k in range(quantity_object):
         quantity_in_stock = random.randint(1, 1000000)
         pname = ""
         uname = ""
@@ -39,22 +46,28 @@ for k in range(1000):
         quantity = random.randint(1, 100000)
         product_id = random.randint(1, k+1)
         user_id = random.randint(1, k+1)
-        odate = f"{str(random.randint(1, 28)).zfill(2)}.{str(random.randint(1, 12)).zfill(2)}.2021"
-        ubdate = f"{str(random.randint(1, 28)).zfill(2)}.{str(random.randint(1, 12)).zfill(2)}.{random.randint(1900, 2020)}"
-        usdate = f"{str(random.randint(1, 28)).zfill(2)}.{str(random.randint(1, 12)).zfill(2)}.2020"
-        pdate = f"{str(random.randint(1, 28)).zfill(2)}.{str(random.randint(1, 12)).zfill(2)}.2019"
+        usdate = random_date.random_date("01.01.2021", now, random.random())
+        ubdate = random_date.random_date("01.01.1900", usdate, random.random())
+        odate = random_date.random_date(usdate, now, random.random())
+        pdate = random_date.random_date(foundation_date, odate, random.random())
         lp.append((quantity_in_stock, pname, description, image, price, pdate))
         lu.append((uname, surname, email, telephone, ubdate, usdate))
         lo.append((address, quantity, product_id, user_id, odate))
+
 with open("product.txt", "w") as f:
     print(f"INSERT INTO product (quantity_in_stock, name, description, image, price, date) VALUES", file=f)
-    for i in lp:
-        print(f"{i},", file=f)
+    for i in range(quantity_object):
+        print(f"{lp[i]},", file=f)
+    print(f"{lp[-1]};", file=f)
+
 with open("user.txt", "w") as f:
     print(f"INSERT INTO user (name, surname, email, telephone, birth_date, start_date) VALUES", file=f)
-    for i in lu:
-        print(f"{i},", file=f)
+    for i in range(quantity_object):
+        print(f"{lu[i]},", file=f)
+    print(f"{lu[-1]};", file=f)
+
 with open("ordeer.txt", "w") as f:
     print(f"INSERT INTO ordeer (address, quantity, product_id, user_id, date) VALUES", file=f)
-    for i in lo:
-        print(f"{i},", file=f)
+    for i in range(quantity_object):
+        print(f"{lo[i]},", file=f)
+    print(f"{lo[-1]};", file=f)
