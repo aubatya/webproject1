@@ -21,7 +21,9 @@ CREATE TABLE "ordeer" (
 	"quantity"	INTEGER NOT NULL,
 	"product_id"	INTEGER NOT NULL,
 	"user_id"	INTEGER NOT NULL,
+	"date"	TEXT,
+	"delivered"	INTEGER COLLATE BINARY,
 	PRIMARY KEY("id" AUTOINCREMENT),
-	FOREIGN KEY("product_id") REFERENCES "product"("id"),
-	FOREIGN KEY("user_id") REFERENCES "user"("id")
+	FOREIGN KEY("user_id") REFERENCES "user"("id"),
+	FOREIGN KEY("product_id") REFERENCES "product"("id")
 );
