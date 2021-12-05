@@ -36,6 +36,10 @@ def randomdb(quantity_object: int) -> list:
                 address+=" "
                 if i == 3:
                     address+=f" {random.randint(1, 200)}"
+            pas = ""
+            for i in range(random.randint(4, 10)):
+                pas+=random.choice(alp+list("!@#$%^&*()1234567890"))
+            pas = hash(pas)
             image = bin(random.randint(1, 100000000))
             price = random.uniform(1, 1000000)
             uname = uname.capitalize()
@@ -53,6 +57,6 @@ def randomdb(quantity_object: int) -> list:
             delivery_date= random_date.random_date(odate, "31.12.2021", random.random())
             delivered = 1 if int(delivery_date[3:5])<9 else 0 
             lp.append((quantity_in_stock, pname, description, image, price, pdate))
-            lu.append((uname, surname, email, telephone, ubdate, usdate))
+            lu.append((uname, surname, email, telephone, ubdate, usdate, pas))
             lo.append((address, quantity, product_id, user_id, odate, delivered, delivery_date))
     return lp, lu, lo

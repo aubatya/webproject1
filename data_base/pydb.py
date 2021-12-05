@@ -1,5 +1,5 @@
+from datetime import datetime
 import sqlite3
-from sqlite3.dbapi2 import Cursor
 import create_ex
 
 def base_init(path: str) -> sqlite3.Connection:
@@ -32,7 +32,7 @@ def random_data(conn: sqlite3.Connection, quantity_object : int) -> None:
     lproduct, luser, lorder = create_ex.randomdb(quantity_object)
     cursor = conn.cursor()
     cursor.executemany("INSERT INTO product (quantity_in_stock, name, description, image, price, date) VALUES (?, ?, ?, ?, ?, ?)", lproduct)
-    cursor.executemany("INSERT INTO user (name, surname, email, telephone, birth_date, start_date) VALUES (?, ?, ?, ?, ?, ?)", luser)
+    cursor.executemany("INSERT INTO user (name, surname, email, telephone, birth_date, start_date, password) VALUES (?, ?, ?, ?, ?, ?, ?)", luser)
     cursor.executemany("INSERT INTO ordeer (address, quantity, product_id, user_id, date, delivered, delivery_date) VALUES (?, ?, ?, ?, ?, ?, ?)", lorder)
     update_date(conn)
     conn.commit()
@@ -51,18 +51,29 @@ def total_sum_quan(conn: sqlite3.Connection) -> list:
     cursor = conn.cursor()
     cursor.execute("SELECT SUM((quantity_in_stock*price)) AS TOTAL_SUM, SUM(quantity_in_stock) AS TOTAL_QUANTITY FROM product;")
     req_res = list(cursor.fetchall()[0])
+    for i in range(2):
+        if req_res[i]==None:
+            req_res[i] = 0
     cursor.close()
     return req_res
 
 #КОЛИЧЕСТВО ПРОДАНННОГО ТОВАРА В ДАННЫЙ ДЕНЬ И ОБЩАЯ СУММА
 def or_sum(conn: sqlite3.Connection, date: str) -> list: #date YYYY-MM-DD
+    try:
+        datetime.strptime(date, "%Y-%m-%d")
+    except Exception as e:
+        raise ValueError("Incorrect data format, should be YYYY-MM-DD")
     cursor = conn.cursor()
     cursor.execute("""SELECT 
-        date,
         (SELECT SUM(quantity)) AS total_quantity,  
         (SELECT quantity*(SELECT price FROM product WHERE product.id = product_id) AS price_for_one) AS total_sum
-    FROM ordeer WHERE date =:date;""", {"date": date})
+    FROM ordeer WHERE delivered = 1 AND date = :date;""", {"date": date})
     req_res = list(cursor.fetchall())
+    for i in range(len(req_res)):
+        if req_res[i][0]==None:
+            req_res[i] = (0, req_res[i][1])
+        if req_res[i][1]==None:
+            req_res[i] = (req_res[i][0], 0)
     cursor.close()
     return req_res
 
@@ -70,7 +81,10 @@ def or_sum(conn: sqlite3.Connection, date: str) -> list: #date YYYY-MM-DD
 def date_sel(conn: sqlite3.Connection) -> list:
     cursor = conn.cursor()
     cursor.execute("""SELECT date FROM ordeer WHERE delivered = 1;""")
-    req_res = list(cursor.fetchall())
+    req_res1 = list(cursor.fetchall())
+    req_res = []
+    for i in req_res1:
+        req_res.append(i[0])
     cursor.close()
     return req_res
 
@@ -78,24 +92,33 @@ def date_sel(conn: sqlite3.Connection) -> list:
 def statis(conn: sqlite3.Connection) -> list: #[[(date, qunatity, sum)], ]
     stat = []
     for i in date_sel(conn):
-        stat.append(or_sum(conn, i[0]))
+        stat.append((i[0], or_sum(conn, i[0])))
     return stat
 
 #КОЛИЧЕСТВО ОСТАВШЕГОСЯ ДАННОГО ТОВАРА
 def ost(conn: sqlite3.Connection, id: int) -> int:
     cursor = conn.cursor()
     cursor.execute("SELECT quantity_in_stock FROM product WHERE id = :id", {"id": id})
-    req_res = int(cursor.fetchall()[0][0])
+    req_res = cursor.fetchall()
+    if req_res:
+        req_res = int(req_res[0][0])
+    else:
+        req_res = 0
     cursor.close()
     return req_res
 
 #id ПОЛЬЗОВАТЕЛЕЙ У КОТОРЫХ ДОСТАВКА НАЗНАЧЕНА НА ДАННУЮ ДАТУ ИЛИ БЫЛА НАЗНАЧЕНА
 def user_id(conn: sqlite3.Connection, date = 'now') -> list: #date YYYY-MM-DD
+    try:
+        if date!='now':
+            datetime.strptime(date, "%Y-%m-%d")
+    except Exception as e:
+        raise ValueError("Incorrect data format, should be YYYY-MM-DD")
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT(id) FROM ordeer WHERE delivery_date = :date;", {"date": date})
     req_res1 = list(cursor.fetchall())
     req_res = [] 
-    for i in req_res:
+    for i in req_res1:
         req_res.append(i[0])
     cursor.close()
     return req_res
@@ -119,5 +142,4 @@ def inf_user(conn: sqlite3.Connection, id: int) ->list:#[(user_name, user_surnam
     return req_res
 
 conn = base_init("site.db")
-
 conn.close()
