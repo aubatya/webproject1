@@ -1,2 +1,2 @@
 --ОБЩЕЕ КОЛИЧЕСТВО НЕ ДОСТАВЛЕННЫХ ЗАКАЗОВ
-SELECT COUNT(DISTINCT(date)) AS quiantity FROM ordeer  WHERE delivered = 0;
+SELECT COUNT(DISTINCT(date)) AS quiantity FROM orders  WHERE delivered = 0;

@@ -1,4 +1,4 @@
-ALTER TABLE ordeer ADD COLUMN "date" TEXT;
-ALTER TABLE  user ADD "birth_date" TEXT;
-ALTER TABLE  user ADD "start_date" TEXT;
-ALTER TABLE  product ADD "date" TEXT;
+ALTER TABLE orders ADD COLUMN "date" TEXT;
+ALTER TABLE  users ADD "birth_date" TEXT;
+ALTER TABLE  users ADD "start_date" TEXT;
+ALTER TABLE  products ADD "date" TEXT;

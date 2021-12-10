@@ -1,6 +1,6 @@
 import string
 import random
-import random_date
+import random_date as random_date
 import datetime
 
 def randomdb(quantity_object: int) -> list:
