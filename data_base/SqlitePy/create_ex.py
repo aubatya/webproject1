@@ -10,7 +10,7 @@ def randomdb(quantity_object: int) -> list:
     alp = list(string.ascii_lowercase)
     foundation_date = "01.07.1988"
     now = datetime.datetime.now().strftime('%d.%m.%Y')
-    with open("name_user.txt", "r") as f:
+    with open("SqlitePy/name_user.txt", "r") as f:
         lname = f.readlines()
     for k in range(quantity_object):
             quantity_in_stock = random.randint(1, 1000000)

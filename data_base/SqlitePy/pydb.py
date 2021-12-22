@@ -129,10 +129,10 @@ def date_sel(conn: sqlite3.Connection) -> list:
     return req_res
 
 #СТАТИСТИКА ПРОДАЖ
-def statis(conn: sqlite3.Connection) -> list: #[[(date, qunatity, sum)], ]
+def statis(conn: sqlite3.Connection) -> list: #[[(date, (qunatity, sum))], ]
     stat = []
     for i in date_sel(conn):
-        stat.append((i[0], or_sum(conn, i[0])))
+        stat.append((i, *or_sum(conn, i)))
     return stat
 
 #КОЛИЧЕСТВО ОСТАВШЕГОСЯ ДАННОГО ТОВАРА
