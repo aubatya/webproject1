@@ -182,4 +182,5 @@ def inf_user(conn: sqlite3.Connection, id: int) ->list:#[(user_name, user_surnam
     return req_res
 
 conn = base_init("relative/../ORM/site.db")
+random_data(conn, 500)
 conn.close()
