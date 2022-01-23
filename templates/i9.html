@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
     <meta charset="UTF-8">
     <title>Процессор Intel Core i9 9900K</title>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="img/logo.png", alt="logo", width="120" height="60">
+            <img class = "logo" src="{{ url_for('static', filename='img/logo.png') }}", alt="logo">
             <ul class="menu">
                 <li class="imenu"><a class="mlink" href="index.html">Главная</a></li>
                 <li class="imenu"><a class="mlink" href="catalog.html">Каталог</a></li>
@@ -17,7 +17,7 @@
         </div>
         <hr>
         <div class="i9">
-            <img class = "img_i9", src="img/i9.png", alt="i9", width="300", height="300">
+            <img class = "img_i9", src="{{ url_for('static', filename='img/i9.png') }}", alt="i9", width="300", height="300">
             <h2>Описание.</h2>
             <p>Intel Core i9-9900K на 8 ядер предназначен для геймерских компьютеров, позволяет запускать игры на максимальных настройках, а также для "компьютеров для учёбы". Девайс называют флагманским десктопным процессором поколения Coffee Lake Refresh. Модель поставляется в боксовой комплектации без кулера. Совместим со многими материнскими платами, имеет сокет типа LGA 1151-v2. Преимущества: 1) встроенное графическое ядро для выдающегося качества изображения. Устройство меньше греется и экономичнее работает, в сравнении с дискретными видеокартами; 2) восемь ядер на архитектуре Coffee Lake - поддерживает многопоточность, обрабатывая до 16 потоков одновременно, гарантирует производительность на высоком уровне; 3) оптимальное энергопотребление - технология Enhanced Intel SpeedStep обеспечивает выгодное соотношение эффективности системы и потребления ресурсов; 4) безопасность пользователя и технологии защиты - процессор соответствует Intel vPro, технологии Boot Guard, OS Guard.</p>
         </div>
